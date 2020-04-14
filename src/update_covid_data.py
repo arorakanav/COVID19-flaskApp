@@ -14,6 +14,7 @@ def update_ccse_covid_time_series_confirmed_global():
   db_dates = df_columns[4:]
   db_columns = df_columns[:4]
   db_countries = df_confirmed['Country/Region'].to_numpy()
+  exdb.editData("DELETE FROM CCSE_COVID19_TIME_SERIES_CONFIRMED_GLOBAL;")
   for date in db_dates:
     df_get_columns = list(db_columns) + list([date])
     for country in db_countries:
@@ -32,6 +33,7 @@ def update_ccse_covid_time_series_deaths_global():
   db_dates = df_columns[4:]
   db_columns = df_columns[:4]
   db_countries = df_deaths['Country/Region'].to_numpy()
+  exdb.editData("DELETE FROM CCSE_COVID19_TIME_SERIES_DEATHS_GLOBAL;")
   for date in db_dates:
     df_get_columns = list(db_columns) + list([date])
     for country in db_countries:
@@ -50,6 +52,7 @@ def update_ccse_covid_time_series_recovered_global():
   db_dates = df_columns[4:]
   db_columns = df_columns[:4]
   db_countries = df_recovered['Country/Region'].to_numpy()
+  exdb.editData("DELETE FROM CCSE_COVID19_TIME_SERIES_RECOVERED_GLOBAL;")
   for date in db_dates:
     df_get_columns = list(db_columns) + list([date])
     for country in db_countries:
@@ -61,5 +64,3 @@ def update_ccse_covid_time_series_recovered_global():
         cases = item[4]
         confirmed_date = datetime.strftime(datetime.strptime(date, '%m/%d/%y'), '%Y-%m-%d')
         exdb.editData("insert into CCSE_COVID19_TIME_SERIES_RECOVERED_GLOBAL (confirmed_date, country, state, lat, lng, cases) values (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", %d)" %(confirmed_date, country, state, lat, lng, cases))
-
-

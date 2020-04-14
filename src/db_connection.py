@@ -10,7 +10,7 @@ from src.db_config import MYSQL_DATABASE_USER, MYSQL_DATABASE_PASSWORD, MYSQL_DA
 def connection(cursorclass, host, user, passwd, dbname, 
 							driver=MYSQL_DATABASE_DRIVER):
 	connection = driver.connect(
-			host=host, user=user, passwd=passwd, db=dbname, cursorclass=cursorclass)
+			host=host, user=user, passwd=passwd, db=dbname, cursorclass=cursorclass, unix_socket="/tmp/mysqlx.sock")
 	try:
 			yield connection
 	except Exception:
