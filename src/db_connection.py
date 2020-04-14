@@ -2,7 +2,12 @@ import pymysql
 import pymysql.cursors as mc
 import contextlib
 
-from src.db_config import MYSQL_DATABASE_USER, MYSQL_DATABASE_PASSWORD, MYSQL_DATABASE_DB, MYSQL_DATABASE_CURSOR, MYSQL_DATABASE_HOST, MYSQL_DATABASE_DRIVER
+from src.db_config import (MYSQL_DATABASE_USER, 
+    MYSQL_DATABASE_PASSWORD, MYSQL_DATABASE_DB, 
+    MYSQL_DATABASE_CURSOR, 
+    MYSQL_DATABASE_HOST, 
+    MYSQL_DATABASE_DRIVER,
+    MYSQL_DATABASE_PORT)
 
 
 # For database connection
@@ -10,7 +15,7 @@ from src.db_config import MYSQL_DATABASE_USER, MYSQL_DATABASE_PASSWORD, MYSQL_DA
 def connection(cursorclass, host, user, passwd, dbname, 
 							driver=MYSQL_DATABASE_DRIVER):
 	connection = driver.connect(
-			host=host, user=user, passwd=passwd, db=dbname, cursorclass=cursorclass, unix_socket="/tmp/mysqlx.sock")
+			host=host, user=user, passwd=passwd, db=dbname, cursorclass=cursorclass, port=MYSQL_DATABASE_PORT)
 	try:
 			yield connection
 	except Exception:
