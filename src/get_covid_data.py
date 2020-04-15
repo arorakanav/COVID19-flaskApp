@@ -107,4 +107,5 @@ def get_ccse_covid_geo_summary_global():
       JOIN deaths_table d\
       ON r.lat = d.lat\
       AND r.lng = d.lng;")[0]
+  summary_dict = dict()
   return geo_summary
