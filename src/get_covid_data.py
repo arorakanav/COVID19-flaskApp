@@ -56,23 +56,23 @@ def get_ccse_covid_time_series_recovered_global():
 
 def get_ccse_covid_time_series_summary_table_global():
   cases_summary = exdb.getData("with confirmed_table as (\
-      SELECT country, SUM(CCSE_COVID19_TIME_SERIES_CONFIRMED_GLOBAL.cases) as total_confirmed_cases\
-      FROM CCSE_COVID19_TIME_SERIES_CONFIRMED_GLOBAL\
-      GROUP BY country),\
-      recovered_table as (\
-      SELECT country, SUM(cases) as total_recovered\
-      FROM CCSE_COVID19_TIME_SERIES_RECOVERED_GLOBAL\
-      GROUP BY country),\
-      deaths_table as (\
-      SELECT country, SUM(cases) as total_deaths\
-      FROM CCSE_COVID19_TIME_SERIES_DEATHS_GLOBAL\
-      GROUP BY country)\
-      SELECT c.country, c.total_confirmed_cases, r.total_recovered, d.total_deaths\
-      from confirmed_table c\
-      JOIN recovered_table r\
-          ON c.country = r.country\
-      JOIN deaths_table d\
-          ON d.country = r.country;")
+    SELECT country, SUM(CCSE_COVID19_TIME_SERIES_CONFIRMED_GLOBAL.cases) as total_confirmed_cases\
+    FROM CCSE_COVID19_TIME_SERIES_CONFIRMED_GLOBAL\
+    GROUP BY country),\
+    recovered_table as (\
+    SELECT country, SUM(cases) as total_recovered\
+    FROM CCSE_COVID19_TIME_SERIES_RECOVERED_GLOBAL\
+    GROUP BY country),\
+    deaths_table as (\
+    SELECT country, SUM(cases) as total_deaths\
+    FROM CCSE_COVID19_TIME_SERIES_DEATHS_GLOBAL\
+    GROUP BY country)\
+    SELECT c.country, c.total_confirmed_cases, r.total_recovered, d.total_deaths\
+    from confirmed_table c\
+    JOIN recovered_table r\
+        ON c.country = r.country\
+    JOIN deaths_table d\
+        ON d.country = r.country;")
   summary_dict = dict()
   for case in cases_summary:
     country = str(case['country'])
@@ -106,5 +106,5 @@ def get_ccse_covid_geo_summary_global():
       AND c.lng = r.lng\
       JOIN deaths_table d\
       ON r.lat = d.lat\
-      AND r.lng = d.lng;")
-  return geo_summary()
+      AND r.lng = d.lng;")[0]
+  return geo_summary
