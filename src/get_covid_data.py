@@ -119,7 +119,7 @@ def get_ccse_covid_geo_summary_global():
       # lat,
       # lng,
       country,
-      # total_recovered,
+      total_recovered,
       total_confirmed,
       # total_deaths
     ])
