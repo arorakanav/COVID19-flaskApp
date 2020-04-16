@@ -111,8 +111,6 @@ def get_ccse_covid_geo_summary_global():
   for case in geo_summary:
     country = str(case['country'])
     total_confirmed = int(case['total_confirmed_cases'])
-    total_recovered = str(case['total_recovered'])
-    total_deaths = str(case['total_deaths'])
     summary_dict.append([
       country,
       total_confirmed,
