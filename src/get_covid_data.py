@@ -90,35 +90,35 @@ def get_ccse_covid_time_series_summary_table_global():
 
 def get_ccse_covid_geo_summary_global():
   geo_summary = exdb.getData("with confirmed_table as (\
-      SELECT lat, lng, SUM(CCSE_COVID19_TIME_SERIES_CONFIRMED_GLOBAL.cases) as total_confirmed_cases\
+      SELECT country, SUM(CCSE_COVID19_TIME_SERIES_CONFIRMED_GLOBAL.cases) as total_confirmed_cases\
       FROM CCSE_COVID19_TIME_SERIES_CONFIRMED_GLOBAL\
-      GROUP BY lat, lng),\
+      GROUP BY country),\
       recovered_table as (\
-      SELECT lat, lng, SUM(cases) as total_recovered\
+      SELECT country, SUM(cases) as total_recovered\
       FROM CCSE_COVID19_TIME_SERIES_RECOVERED_GLOBAL\
-      GROUP BY lat, lng),\
+      GROUP BY country),\
       deaths_table as (\
-      SELECT lat, lng, SUM(cases) as total_deaths\
-      FROM CCSE_COVID19_TIME_SERIES_DEATHS_GLOBAL\
-      GROUP BY lat, lng)\
-      SELECT c.lat, c.lng, c.total_confirmed_cases, r.total_recovered, d.total_deaths\
+      SELECT country, SUM(cases) as total_deaths \
+      FROM CCSE_COVID19_TIME_SERIES_DEATHS_GLOBAL \
+      GROUP BY country)\
+      SELECT c.country, c.total_confirmed_cases, r.total_recovered, d.total_deaths\
       from confirmed_table c\
-      JOIN recovered_table r\
-      ON c.lat = r.lat\
-      AND c.lng = r.lng\
-      JOIN deaths_table d\
-      ON r.lat = d.lat\
-      AND r.lng = d.lng;")
+      JOIN recovered_table r \
+          ON c.country = r.country \
+      JOIN deaths_table d \
+          ON r.country = d.country;")
   summary_dict = list()
   for case in geo_summary:
-    lat = float(case['lat'])
-    lng = float(case['lng'])
+    # lat = float(case['lat'])
+    # lng = float(case['lng'])
+    country = str(case['country'])
     total_confirmed = int(case['total_confirmed_cases'])
     total_recovered = str(case['total_recovered'])
     total_deaths = str(case['total_deaths'])
     summary_dict.append([
-      lat,
-      lng,
+      # lat,
+      # lng,
+      country,
       # total_recovered,
       total_confirmed,
       # total_deaths
