@@ -73,21 +73,22 @@ def get_ccse_covid_time_series_summary_table_global():
         ON c.country = r.country\
     JOIN deaths_table d\
         ON d.country = r.country;")
-  summary_dict = dict()
+  summary_dict = list()
   for case in cases_summary:
     country = str(case['country'])
     total_confirmed = int(case['total_confirmed_cases'])
     total_recovered = int(case['total_recovered'])
     total_deaths = int(case['total_deaths'])
-    summary_dict[country] = {
+    summary_dict.append({
+      'country': country,
       'recovered': total_recovered,
       'confirmed': total_confirmed,
       'deaths': total_deaths
-    }
+    })
   return summary_dict
 
 def get_ccse_covid_geo_summary_global():
-  geo_summary = exdb("with confirmed_table as (\
+  geo_summary = exdb.getData("with confirmed_table as (\
       SELECT lat, lng, SUM(CCSE_COVID19_TIME_SERIES_CONFIRMED_GLOBAL.cases) as total_confirmed_cases\
       FROM CCSE_COVID19_TIME_SERIES_CONFIRMED_GLOBAL\
       GROUP BY lat, lng),\
@@ -106,6 +107,20 @@ def get_ccse_covid_geo_summary_global():
       AND c.lng = r.lng\
       JOIN deaths_table d\
       ON r.lat = d.lat\
-      AND r.lng = d.lng;")[0]
-  summary_dict = dict()
-  return geo_summary
+      AND r.lng = d.lng;")
+  summary_dict = list()
+  for case in geo_summary:
+    lat = float(case['lat'])
+    lng = float(case['lng'])
+    total_confirmed = int(case['total_confirmed_cases'])
+    total_recovered = int(case['total_recovered'])
+    total_deaths = int(case['total_deaths'])
+    summary_dict.append([
+      lat,
+      lng,
+      total_recovered,
+      total_confirmed,
+      total_deaths
+    ])
+
+  return summary_dict
