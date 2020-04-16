@@ -1,5 +1,6 @@
 from src.db_connection import exdb
 from datetime import datetime
+from decimal import Decimal
 
 def get_ccse_covid_time_series_confirmed_global():
   confirmed_cases = exdb.getData("SELECT confirmed_date, country, SUM(cases) as total_confirmed_cases FROM CCSE_COVID19_TIME_SERIES_CONFIRMED_GLOBAL WHERE country='Canada' GROUP BY confirmed_date, country;")
@@ -112,9 +113,9 @@ def get_ccse_covid_geo_summary_global():
   for case in geo_summary:
     lat = float(case['lat'])
     lng = float(case['lng'])
-    total_confirmed = int(case['total_confirmed_cases'])
-    total_recovered = int(case['total_recovered'])
-    total_deaths = int(case['total_deaths'])
+    total_confirmed = str(case['total_confirmed_cases'])
+    total_recovered = str(case['total_recovered'])
+    total_deaths = str(case['total_deaths'])
     summary_dict.append([
       lat,
       lng,
