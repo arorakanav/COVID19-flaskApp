@@ -2,7 +2,7 @@ from src.db_connection import exdb
 from datetime import datetime
 
 def get_ccse_covid_time_series_confirmed_global():
-  confirmed_cases = exdb.getData("SELECT confirmed_date, country, SUM(cases) as total_confirmed_cases FROM CCSE_COVID19_TIME_SERIES_CONFIRMED_GLOBAL GROUP BY confirmed_date, country;")
+  confirmed_cases = exdb.getData("SELECT confirmed_date, country, SUM(cases) as total_confirmed_cases FROM CCSE_COVID19_TIME_SERIES_CONFIRMED_GLOBAL WHERE country='Canada' GROUP BY confirmed_date, country;")
   confirmed_cases_dict = dict()
   
   for confirmed_case in confirmed_cases:
@@ -20,7 +20,7 @@ def get_ccse_covid_time_series_confirmed_global():
   return confirmed_cases_dict
 
 def get_ccse_covid_time_series_deaths_global():
-  death_cases = exdb.getData("SELECT confirmed_date, country, SUM(cases) as total_deaths FROM CCSE_COVID19_TIME_SERIES_DEATHS_GLOBAL GROUP BY confirmed_date, country;")
+  death_cases = exdb.getData("SELECT confirmed_date, country, SUM(cases) as total_deaths FROM CCSE_COVID19_TIME_SERIES_DEATHS_GLOBAL WHERE country='Canada' GROUP BY confirmed_date, country;")
   deaths_dict = dict()
   for confirmed_case in death_cases:
     confirmed_date = datetime.strftime(confirmed_case['confirmed_date'], '%Y-%m-%d')
@@ -37,7 +37,7 @@ def get_ccse_covid_time_series_deaths_global():
   return deaths_dict
 
 def get_ccse_covid_time_series_recovered_global():
-  recovered_cases = exdb.getData("SELECT confirmed_date, country, SUM(cases) as total_recovered FROM CCSE_COVID19_TIME_SERIES_RECOVERED_GLOBAL GROUP BY confirmed_date, country;")
+  recovered_cases = exdb.getData("SELECT confirmed_date, country, SUM(cases) as total_recovered FROM CCSE_COVID19_TIME_SERIES_RECOVERED_GLOBAL WHERE country='Canada' GROUP BY confirmed_date, country;")
   deaths_dict = dict()
   
   for confirmed_case in recovered_cases:
