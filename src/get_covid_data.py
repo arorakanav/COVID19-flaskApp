@@ -113,15 +113,15 @@ def get_ccse_covid_geo_summary_global():
   for case in geo_summary:
     lat = float(case['lat'])
     lng = float(case['lng'])
-    total_confirmed = str(case['total_confirmed_cases'])
+    total_confirmed = int(case['total_confirmed_cases'])
     total_recovered = str(case['total_recovered'])
     total_deaths = str(case['total_deaths'])
     summary_dict.append([
       lat,
       lng,
-      total_recovered,
+      # total_recovered,
       total_confirmed,
-      total_deaths
+      # total_deaths
     ])
 
   return summary_dict
