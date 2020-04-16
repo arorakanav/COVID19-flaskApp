@@ -11,4 +11,4 @@ def update_ccse_covid_time_series_global_job():
   update_ccse_covid_time_series_recovered_global()
   update_ccse_covid_time_series_deaths_global()
 
-scheduler.start()
+# scheduler.start()
